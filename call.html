@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+
+    body, input, button {
+        color: #333;
+        font-family: Lato, sans-serif;
+    }
+
+    input {
+        margin: 0;
+        font-size: 16px;
+        line-height: 16px;
+        height: 16px;
+        padding: 7px;
+        border: 1px solid #ddd;
+        background: #fff;
+        border-radius: 6px;
+        font-family: Lato, sans-serif;
+    }
+
+    label {
+        min-width: 210px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    button {
+        background: none;
+        border: 0px;
+        color: #888;
+        font-size: 15px;
+        margin: 10px 0 0 10px;
+        font-family: Lato, sans-serif;
+        cursor: pointer;
+    }
+    .container {
+        width: 600px;
+        margin: 20px auto;
+    }
+    .input-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .results-wrapper {
+        margin-top: 40px;
+        padding-top: 10px;
+        border-top: 2px solid black;
+    }
+
+    .add-button {
+        width: 100%;
+        border: 1px solid lightgray;
+        padding: 15px 25px;
+        margin: 0;
+    }
+
+    .users-list {
+    }
+
+    .users-list li {
+        margin-top: 5px;
+    }
+
+    .user-devices-list {
+        margin-top: 20px;
+    }
+
+    .delete {
+    }
+</style>
+
+    <div class="container">
+
+        <div class="input-wrapper">
+            <label for="new-user">Введите имя юзера:</label>
+            <input id="new-user" type="text">
+        </div>
+
+        <div class="input-wrapper">
+            <label for="new-user">Введите название девайса:</label>
+            <input id="new-device" type="text">
+        </div>
+
+        <button class="add-button" type="button">Добавить</button>
+
+        <div class="results-wrapper">
+            <ol class="users-list"><strong>Список юзеров</strong></ol>
+
+        </div>
+    </div>
+
+
+
+<script>
+
+    var userInput = document.getElementById("new-user");
+    var userDeviceInput = document.getElementById("new-device");
+
+    var usersList = document.querySelector(".users-list");
+    var usersDeviceList = document.querySelector(".user-devices-list");
+    var addUserButton = document.querySelector(".add-button");
+
+    var createNewDevice = function(deviceInputValue, itemsList) {
+        var deviceItem = document.createElement("li");
+        var deviceLabel = document.createElement("label");
+        var deleteButton = document.createElement("button");
+
+        deviceLabel.innerText = deviceInputValue;
+
+        deleteButton.innerText = "Удалить";
+        deleteButton.className = "delete";
+
+        deviceItem.appendChild(deviceLabel);
+        deviceItem.appendChild(deleteButton);
+
+        itemsList.appendChild(deviceItem);
+
+        return deviceItem;
+    };
+
+
+
+    var createNewUser = function(userInputValue, deviceInputValue) {
+
+        if (userInputValue) {
+
+            var userItem = document.createElement("li"),
+                userLabel = document.createElement("label"),
+                deleteButton = document.createElement("button"),
+                userAddDevicesWrapper = document.createElement("div"),
+                userAddDevicesInput = document.createElement("input"),
+                userAddDevicesButton = document.createElement("button"),
+                userDevicesList = document.createElement("ul");
+
+            userLabel.innerText = userInputValue;
+
+            deleteButton.innerText = "Удалить";
+            deleteButton.className = "delete";
+
+            userDevicesList.innerText = "Список девайсов:";
+            userDevicesList.className = "user-devices-list";
+
+            userAddDevicesInput.className = "new-device";
+            userAddDevicesButton.innerText = "Добавить девайс";
+            userAddDevicesButton.className = "add-device";
+
+            userItem.appendChild(userLabel);
+            userItem.appendChild(deleteButton);
+            userItem.appendChild(userDevicesList);
+            userItem.appendChild(userAddDevicesWrapper);
+            userAddDevicesWrapper.appendChild(userAddDevicesInput);
+            userAddDevicesWrapper.appendChild(userAddDevicesButton);
+
+            if (deviceInputValue) {
+                createNewDevice(deviceInputValue, userDevicesList);
+            }
+
+            return userItem;
+
+        }
+    };
+
+    var addUser = function() {
+        var userItem = createNewUser(userInput.value, userDeviceInput.value);
+        usersList.appendChild(userItem);
+        userInput.value = "";
+        userDeviceInput.value = "";
+    };
+
+    var deleteUserDevice = function() {
+        var item = this.parentNode;
+        var itemParent = item.parentNode;
+        itemParent.removeChild(item);
+    };
+
+    var addDevice = function() {
+        var item = this.parentNode,
+            userDeviceList = item.previousSibling,
+            userDeviceInput = document.querySelector(".new-device");
+        createNewDevice(userDeviceInput.value, userDeviceList);
+        userDeviceInput.value = "";
+    };
+
+
+
+    var taskEvents = function(context, param) {
+
+        if (param === "add-user") {
+            addUser.call(context);
+        }
+
+        if (param === "add-device") {
+            addDevice.call(context);
+        }
+
+        if (param === "delete") {
+            deleteUserDevice.call(context);
+        }
+    };
+
+    addUserButton.addEventListener("click", function() {
+        taskEvents(usersList, "add-user")
+
+    });
+
+    document.addEventListener("click", function(e) {
+        var target = e.target;
+        if(target.tagName == 'BUTTON' && target.classList.contains("delete")){
+            taskEvents(target, "delete")
+        }
+    });
+
+    document.addEventListener("click", function(e) {
+        var target = e.target;
+        if(target.tagName == 'BUTTON' && target.classList.contains("add-device")){
+            taskEvents(target, "add-device")
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
