@@ -5,6 +5,7 @@
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
     <style>
         .tabs {
             list-style-type: none;
@@ -61,12 +62,23 @@
     </div>
 </div>
 </body>
+
 <script>
-    $(".tabs-item a").on("click", function(e) {
+
+    $(".tabs").on("click", "a",  function(e) {
+        var $this = $(this),
+            $tab = $this.parent(),
+            activeAttr = $this.attr('href');
+
+
         e.preventDefault();
-        var activeAttr = $(this).attr('href');
-        $(this).parent().toggleClass("active").siblings().removeClass('active');
+
+
+        $tab.addClass("active");
+        $tab.siblings().removeClass('active');
+
         $("#" + activeAttr).toggleClass("active").siblings().removeClass('active');
     })
 </script>
+
 </html>
