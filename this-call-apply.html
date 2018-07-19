@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+
+    body, input, button {
+        color: #333;
+        font-family: Lato, sans-serif;
+    }
+
+    input {
+        margin: 0;
+        font-size: 16px;
+        line-height: 16px;
+        height: 16px;
+        padding: 7px;
+        border: 1px solid #ddd;
+        background: #fff;
+        border-radius: 6px;
+        font-family: Lato, sans-serif;
+    }
+
+    label {
+        display: inline-block;
+        margin-right: 10px;
+        min-width: 170px;
+    }
+
+    .container {
+        width: 600px;
+        margin: 20px auto;
+    }
+    .input-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .task-wrapper {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid lightgray;
+    }
+    button {
+        padding: 4px 16px;
+        font-size: 16px;
+        line-height: 1.3333333;
+        border-radius: 6px;
+        font-family: Lato, sans-serif;
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+    .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+</style>
+
+    <div class="container">
+
+        <div class="task-wrapper">
+            <h2>Task #1</h2>
+            <div class="flex">
+                <div>
+                    <div class="input-wrapper">
+                        <label for="new-input">Enter some value:</label>
+                        <input id="new-input" type="text">
+                    </div>
+                </div>
+                <div>
+                    <button id="action">
+                        Action
+                    </button>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="task-wrapper">
+            <h2>Task #2</h2>
+            <div class="flex">
+                <div>
+                    <div class="input-wrapper">
+                        <label for="input-name">Enter name:</label>
+                        <input id="input-name" type="text">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="input-greeting">Enter greeting:</label>
+                        <input id="input-greeting" type="text">
+                    </div>
+                </div>
+                <div>
+                    <button id="action2">
+                        Action
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="task-wrapper">
+            <h2>Task #3</h2>
+
+            <div class="flex">
+                <div>
+                    <div class="input-wrapper">
+                        <label for="input-greeting2">Enter greeting:</label>
+                        <input id="input-greeting2" type="text">
+                    </div>
+                </div>
+
+                <div>
+                    <button id="action3">
+                        Action
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+<script>
+
+    function logToConsole() {
+        console.log(this.value);
+    }
+
+    function logToConsole2(name) {
+        alert(this + ", " + name);
+    }
+
+    function logToConsole3(name, surname) {
+        alert(this  + ", " + name + " " + surname);
+    }
+
+    document.getElementById("action").addEventListener("click", function() {
+        var inputValue = document.getElementById("new-input");
+
+        logToConsole.call(inputValue);
+
+        inputValue.value = "";
+    });
+
+
+    document.getElementById("action2").addEventListener("click", function() {
+        var inputValue = document.getElementById("input-name").value;
+        var inputGreetingValue = document.getElementById("input-greeting").value;
+
+        logToConsole2.call(inputGreetingValue, inputValue);
+        logToConsole2.apply(inputGreetingValue, [inputValue]);
+
+    });
+
+
+    document.getElementById("action3").addEventListener("click", function() {
+        var inputValue = document.getElementById("input-greeting2").value;
+
+        logToConsole3.call(inputValue, "Василий", "Петров");
+        logToConsole3.call(inputValue, "Эдуарт", "Марков");
+        logToConsole3.call(inputValue, "Ольга", "Манько");
+
+    });
+
+
+
+</script>
+</body>
+</html>
