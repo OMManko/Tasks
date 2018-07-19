@@ -141,7 +141,8 @@
 <script>
 
     function logToConsole() {
-        console.log(this.value);
+        console.log(this.toString());
+        alert(this);
     }
 
     function logToConsole2(name) {
@@ -155,7 +156,7 @@
     document.getElementById("action").addEventListener("click", function() {
         var inputValue = document.getElementById("new-input");
 
-        logToConsole.call(inputValue);
+        logToConsole.call(inputValue.value);
 
         inputValue.value = "";
     });
