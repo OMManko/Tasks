@@ -150,7 +150,7 @@
     }
 
     function logToConsole3(name, surname) {
-        alert (this  + ", " + name + " " + surname);
+        alert (this.value  + ", " + name + " " + surname);
     }
 
     document.getElementById("action").addEventListener("click", function() {
@@ -173,12 +173,9 @@
 
 
     document.getElementById("action3").addEventListener("click", function() {
-        var inputValue = document.getElementById("input-greeting2").value;
+        var inputValue = document.getElementById("input-greeting2");
 
-        var sayHi =  logToConsole3.bind(inputValue);
-        sayHi("Василий", "Петров");
-        sayHi("Петр", "Иванов");
-        sayHi("Оля", "Манько");
+        logToConsole3.call(inputValue, "Василий", "Петров");
 
     });
 
